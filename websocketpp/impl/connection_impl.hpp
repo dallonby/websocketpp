@@ -605,21 +605,10 @@ void connection<config>::replace_header(std::string const & key,
     std::string const & val)
 {
     if (m_is_server) {
-        if (m_internal_state == istate::PROCESS_HTTP_REQUEST) {
-            // we are setting response headers for an incoming server connection
             m_response.replace_header(key,val);
-        } else {
-            throw exception("Call to replace_header from invalid state",
-                        error::make_error_code(error::invalid_state));
         }
     } else {
-        if (m_internal_state == istate::USER_INIT) {
-            // we are setting initial headers for an outgoing client connection
             m_request.replace_header(key,val);
-        } else {
-            throw exception("Call to replace_header from invalid state",
-                        error::make_error_code(error::invalid_state));
-        }
     }
 }
 
@@ -628,21 +617,9 @@ template <typename config>
 void connection<config>::remove_header(std::string const & key)
 {
     if (m_is_server) {
-        if (m_internal_state == istate::PROCESS_HTTP_REQUEST) {
-            // we are setting response headers for an incoming server connection
             m_response.remove_header(key);
-        } else {
-            throw exception("Call to remove_header from invalid state",
-                        error::make_error_code(error::invalid_state));
-        }
     } else {
-        if (m_internal_state == istate::USER_INIT) {
-            // we are setting initial headers for an outgoing client connection
             m_request.remove_header(key);
-        } else {
-            throw exception("Call to remove_header from invalid state",
-                        error::make_error_code(error::invalid_state));
-        }
     }
 }
 
