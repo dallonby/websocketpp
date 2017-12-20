@@ -606,7 +606,6 @@ void connection<config>::replace_header(std::string const & key,
 {
     if (m_is_server) {
             m_response.replace_header(key,val);
-        }
     } else {
             m_request.replace_header(key,val);
     }
